@@ -157,7 +157,6 @@ var BingoGenerator = function (bingoList, options) {
     for (var i = 1; i <= 25; i++) {
         this.goalsList = this.goalsList.concat(bingoList[i]);
     }
-    console.log(this.goalsList)
     this.goalsList.sort(function (a, b) {
         var timeDiff = a.time - b.time;
 
@@ -409,7 +408,6 @@ BingoGenerator.prototype.hasConflictsOnBoard = function (goal) {
             var squares = [goal, square.goal];
             var synergy = this.evaluateSquares(squares);
             if (synergy >= TOO_MUCH_SYNERGY) {
-                console.log(squares)
                 return true;
             }
         }
