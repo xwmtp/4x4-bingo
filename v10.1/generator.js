@@ -57,13 +57,13 @@ var BLACKOUT_PROFILE = {
 
 var SHORT_PROFILE={
     defaultMinimumSynergy: DEFAULT_PROFILE.defaultMinimumSynergy,
-    defaultMaximumSynergy: 3.5,
+    defaultMaximumSynergy: 2.5,
     defaultMaximumIndividualSynergy: DEFAULT_PROFILE.defaultMaximumIndividualSynergy,
     defaultMaximumSpill: DEFAULT_PROFILE.defaultMaximumSpill,
     defaultInitialOffset: DEFAULT_PROFILE.defaultInitialOffset,
     defaultMaximumOffset: DEFAULT_PROFILE.defaultMaximumOffset,
     baselineTime: 12,
-    timePerDifficulty: 0.5};
+    timePerDifficulty: 0.75};
 
 Array.prototype.sortNumerically = function () {
     return this.sort(function (a, b) {
@@ -157,6 +157,7 @@ var BingoGenerator = function (bingoList, options) {
     for (var i = 1; i <= 25; i++) {
         this.goalsList = this.goalsList.concat(bingoList[i]);
     }
+    console.log(this.goalsList)
     this.goalsList.sort(function (a, b) {
         var timeDiff = a.time - b.time;
 
@@ -184,6 +185,9 @@ var BingoGenerator = function (bingoList, options) {
     this.profile = NORMAL_PROFILE;
     if (this.mode === 'blackout') {
         this.profile = BLACKOUT_PROFILE;
+    }
+    if (this.mode === 'short') {
+        this.profile = SHORT_PROFILE;
     }
 
     this.baselineTime = options.baselineTime || this.profile.baselineTime;
@@ -405,6 +409,7 @@ BingoGenerator.prototype.hasConflictsOnBoard = function (goal) {
             var squares = [goal, square.goal];
             var synergy = this.evaluateSquares(squares);
             if (synergy >= TOO_MUCH_SYNERGY) {
+                console.log(squares)
                 return true;
             }
         }
